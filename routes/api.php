@@ -25,6 +25,8 @@ Route::prefix('v1')->as('api.')->namespace('API')->group(function () {
         return $request->user();
     });
 
+    Route::get('/user/settings', [\App\Http\Controllers\API\SettingsController::class, 'index'])->middleware('auth:sanctum', 'verified');
+    Route::post('/user/settings', [\App\Http\Controllers\API\SettingsController::class, 'storeSettings'])->middleware('auth:sanctum', 'verified');
 
 
     Route::get('/news', [\App\Http\Controllers\API\NewsController::class, 'index'])->middleware('auth:sanctum', 'verified');

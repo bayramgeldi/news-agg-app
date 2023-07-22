@@ -13,15 +13,15 @@ class NewsController extends Controller
 
     public function index()
     {
-        $newsTheGuardian = TheGuardian::getNews();
-        $newsNewYorkTimes = NewYorkTimes::getNews();
-        $newsNewsApi = NewsApiOrg::getNews();
+        $newsTheGuardian = TheGuardian::getNewsByCategory();
+        $newsNewYorkTimes = NewYorkTimes::getNewsByCategory();
+        $newsNewsApi = NewsApiOrg::getNewsByCategory();
 
         $news = array_merge($newsNewsApi['data'], $newsTheGuardian['data'], $newsNewYorkTimes['data']);
-        //$news = TheGuardian::getCategories();
-        //$news = NewsApiOrg::getCategories();
-        //$news = NewYorkTimes::getCategories();
-        return response()->json(['news' => $news]);
+        usort($news, function ($a, $b) {
+            return strtotime($b->publishedAt) - strtotime($a->publishedAt);
+        });
+        return response()->json(['totalResults' => count($news), 'news' => $news]);
     }
 
 
