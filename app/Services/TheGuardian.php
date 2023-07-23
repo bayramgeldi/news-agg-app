@@ -29,7 +29,6 @@ class TheGuardian extends NewsSource
             return $news;
         }
         $data = json_decode($response->getBody()->getContents(), true);
-        $news['totalResults'] = $data['response']['total'];
         foreach ($data['response']['results'] as $article) {
             $subSource = [
                 'id' => NewsSource::THE_GUARDIAN,
@@ -68,7 +67,7 @@ class TheGuardian extends NewsSource
                 (string) Carbon::parse($article['webPublicationDate'])->format('Y-m-d H:i:s'),
                 (string) ''
             );
-            $news['data'][] = $articleClass->collect();
+            $news[] = $articleClass->collect();
 
         }
         return $news;

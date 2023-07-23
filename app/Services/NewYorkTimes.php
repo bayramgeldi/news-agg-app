@@ -32,7 +32,6 @@ class NewYorkTimes extends NewsSource
             return $news;
         }
         $data = json_decode($response->getBody()->getContents(), true);;
-        $news['totalResults'] = $data['num_results'];
         foreach ($data['results'] as $article) {
             $subSource = [
                 'id' => NewsSource::NEW_YORK_TIMES,
@@ -64,7 +63,7 @@ class NewYorkTimes extends NewsSource
                 (string) Carbon::parse($article['published_date'])->format('Y-m-d H:i:s'),
                 (string) $article['abstract']
             );
-            $news['data'][] = $articleClass->collect();
+            $news[] = $articleClass->collect();
         }
         return $news;
     }

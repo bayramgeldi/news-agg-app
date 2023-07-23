@@ -26,12 +26,12 @@ class UserSourceSetting extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getSourceAttribute($value): ?array
+    public function getSourceAttribute($value): ?object
     {
         $sources=NewsSource::all();
         foreach ($sources as $source) {
             if ($source['name'] == $this->attributes['source']) {
-                return ['name'=>$source['name'],'title'=>$source['title'], 'description'=>$source['description']];
+                return (object)['name'=>$source['name'],'title'=>$source['title'], 'description'=>$source['description']];
             }
         }
 

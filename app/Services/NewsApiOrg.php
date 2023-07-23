@@ -33,7 +33,6 @@ class NewsApiOrg extends NewsSource
             return $news;
         }
         $data = json_decode($response->getBody()->getContents(), true);
-        $news['totalResults'] = $data['totalResults'];
         foreach ($data['articles'] as $article) {
             $subSource = $article['source'];
             $category = Category::where('source', self::NEWS_API_ORG)->where('name', 'general')->first();
@@ -62,7 +61,7 @@ class NewsApiOrg extends NewsSource
                 (string) Carbon::parse($article['publishedAt'])->format('Y-m-d H:i:s'),
                 (string) $article['content']
             );
-            $news['data'][] = $articleClass->collect();
+            $news[] = $articleClass->collect();
         }
         return $news;
     }
