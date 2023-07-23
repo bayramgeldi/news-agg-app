@@ -31,6 +31,7 @@ Route::prefix('v1')->as('api.')->namespace('API')->group(function () {
 
     Route::get('/news', [\App\Http\Controllers\API\NewsController::class, 'index'])->middleware('auth:sanctum', 'verified');
     Route::get('/sources', [\App\Http\Controllers\API\NewsController::class, 'newsSources'])->middleware('auth:sanctum', 'verified');
+    Route::get('/categories', [\App\Http\Controllers\API\MainCategoryController::class, 'index']);
 });
 
 

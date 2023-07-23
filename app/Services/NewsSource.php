@@ -12,7 +12,10 @@ class NewsSource
     const NEWS_API_ORG = 'NewsAPIOrg';
     const NEW_YORK_TIMES = 'NewYorkTimes';
 
-
+    static array $categories = [
+        "business",
+        "entertainment", "general", "health", "science", "sports", "technology"
+    ];
     protected array $authors = [];
 
     public static function all(): array

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\MainCategory;
+use App\Services\NewsSource;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +20,15 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        foreach (NewsSource::$categories as $category) {
+            MainCategory::firstOrCreate([
+                'name' => $category,
+            ],[
+                'name' => $category,
+                'title' => $category,
+                'description' => $category,
+            ]);
+        }
     }
 }
