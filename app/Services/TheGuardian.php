@@ -4,12 +4,14 @@ namespace App\Services;
 
 use App\Models\Author;
 use App\Models\Category;
+use Cache;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Str;
 
 class TheGuardian extends NewsSource
 {
+
 
     public static function getNewsByCategory(Category $category = null): array
     {
@@ -63,7 +65,7 @@ class TheGuardian extends NewsSource
                 $category,
                 (string) isset($article['fields']['trailText']) ? $article['fields']['trailText'] : '',
                 (string) $article['webUrl'],
-                (string) $article['fields']['thumbnail'],
+                (string) isset($article['fields']['thumbnail']) ? $article['fields']['thumbnail'] : '', //thumbnail
                 (string) Carbon::parse($article['webPublicationDate'])->format('Y-m-d H:i:s'),
                 (string) ''
             );
@@ -109,4 +111,11 @@ class TheGuardian extends NewsSource
         return $categories;
     }
 
+    public static function getCachedNews(Category $category = null): array
+    {
+        $categoryString = $category ? $category->id:"";
+        return Cache::remember(NewsSource::THE_GUARDIAN.$categoryString, self::TTL, function () use ($category) {
+            return self::getNewsByCategory($category);
+        });
+    }
 }

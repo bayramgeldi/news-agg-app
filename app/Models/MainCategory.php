@@ -11,4 +11,10 @@ class MainCategory extends Model
         'title',
         'description',
     ];
+
+
+    public function sub_categories(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Category::class);
+    }
 }

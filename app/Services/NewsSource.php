@@ -11,6 +11,7 @@ class NewsSource
     const THE_GUARDIAN = 'TheGuardian';
     const NEWS_API_ORG = 'NewsAPIOrg';
     const NEW_YORK_TIMES = 'NewYorkTimes';
+    const TTL = 60 * 60 * 3;
 
     static array $categories = [
         "business",
@@ -18,8 +19,15 @@ class NewsSource
     ];
     protected array $authors = [];
 
-    public static function all(): array
+    public static function all(bool $keysOnly=false): array
     {
+        if ($keysOnly) {
+            return [
+                self::THE_GUARDIAN,
+                self::NEWS_API_ORG,
+                self::NEW_YORK_TIMES,
+            ];
+        }
         return [
             [
                 'name' => self::THE_GUARDIAN,

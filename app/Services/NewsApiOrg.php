@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Author;
 use App\Models\Category;
+use Cache;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -87,6 +88,16 @@ class NewsApiOrg extends NewsSource
         }
 
         return $categories;
+    }
+
+
+    public static function getCachedNews(Category $category = null): array
+    {
+        $categoryString = $category ? $category->id:"";
+
+        return Cache::remember(NewsSource::NEWS_API_ORG.$categoryString, self::TTL, function () use ($category) {
+            return self::getNewsByCategory($category);
+        });
     }
 
 }

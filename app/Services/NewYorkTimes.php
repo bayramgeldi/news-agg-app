@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Author;
 use App\Models\Category;
+use Cache;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Str;
@@ -39,11 +40,11 @@ class NewYorkTimes extends NewsSource
             ];
 
             //insert author to db
-            if (isset($article['byline'])){
+            if (isset($article['byline'])) {
                 $author = Author::firstOrCreate([
                     'name' => Str::slug($article['byline']),
                     'source' => self::NEW_YORK_TIMES
-                ],[
+                ], [
                     'name' => Str::slug($article['byline']),
                     'source' => self::NEW_YORK_TIMES,
                     'description' => $article['byline'],
@@ -59,7 +60,7 @@ class NewYorkTimes extends NewsSource
                 $category,
                 (string) isset($article['abstract']) ? $article['abstract'] : '',
                 (string) $article['url'],
-                (string) $article['multimedia'][1]['url'],
+                (string) isset($article['multimedia'][1]['url']) ? $article['multimedia'][1]['url'] : '',
                 (string) Carbon::parse($article['published_date'])->format('Y-m-d H:i:s'),
                 (string) $article['abstract']
             );
@@ -108,6 +109,14 @@ class NewYorkTimes extends NewsSource
                 'description' => 'General',
             ]);
         return $categories;
+    }
+
+    public static function getCachedNews(Category $category = null): array
+    {
+        $categoryString = $category ? $category->id : "";
+        return Cache::remember(NewsSource::NEW_YORK_TIMES.$categoryString, self::TTL, function () use ($category) {
+            return self::getNewsByCategory($category);
+        });
     }
 
 }

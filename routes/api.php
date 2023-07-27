@@ -29,9 +29,10 @@ Route::prefix('v1')->as('api.')->namespace('API')->group(function () {
     Route::post('/user/settings', [\App\Http\Controllers\API\SettingsController::class, 'storeSettings'])->middleware('auth:sanctum', 'verified');
 
 
-    Route::get('/news', [\App\Http\Controllers\API\NewsController::class, 'index'])->middleware('auth:sanctum', 'verified');
-    Route::get('/sources', [\App\Http\Controllers\API\NewsController::class, 'newsSources'])->middleware('auth:sanctum', 'verified');
+    Route::get('/news', [\App\Http\Controllers\API\NewsController::class, 'index']);
+    Route::get('/sources', [\App\Http\Controllers\API\NewsController::class, 'newsSources']);
     Route::get('/categories', [\App\Http\Controllers\API\MainCategoryController::class, 'index']);
+    Route::get('/categories/{category}', [\App\Http\Controllers\API\MainCategoryController::class, 'getNewsByCategory']);
 });
 
 
