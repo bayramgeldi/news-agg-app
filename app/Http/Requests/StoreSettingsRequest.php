@@ -12,7 +12,7 @@ class StoreSettingsRequest extends FormRequest
     {
         return [
             'categories' => 'array',
-            'categories.*' => 'integer|exists:categories,id',
+            'categories.*' => 'integer|exists:main_categories,id',
             'authors' => 'array',
             'authors.*' => 'integer|exists:authors,id',
             'sources' => 'array',

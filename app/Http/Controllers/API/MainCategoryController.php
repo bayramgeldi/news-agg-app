@@ -15,7 +15,7 @@ class MainCategoryController extends Controller
 {
     public function index()
     {
-        return MainCategory::all();
+        return MainCategory::with('sub_categories')->get();
     }
 
     public function getNewsByCategory(string $category)
