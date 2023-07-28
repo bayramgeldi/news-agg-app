@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\MainCategory;
+use App\Services\NewsApiOrg;
 use App\Services\NewsSource;
+use App\Services\NewYorkTimes;
+use App\Services\TheGuardian;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,5 +33,10 @@ class DatabaseSeeder extends Seeder
                 'description' => $category,
             ]);
         }
+
+
+        TheGuardian::getCategories();
+        NewYorkTimes::getCategories();
+        NewsApiOrg::getCategories();
     }
 }

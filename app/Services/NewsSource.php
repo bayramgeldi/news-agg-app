@@ -13,6 +13,7 @@ class NewsSource
     const NEW_YORK_TIMES = 'NewYorkTimes';
     const TTL = 60 * 60 * 3;
 
+
     static array $categories = [
         "business",
         "entertainment", "general", "health", "science", "sports", "technology"
