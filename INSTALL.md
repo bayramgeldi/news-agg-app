@@ -8,7 +8,8 @@ Whole project consists of three parts:
 
 
 ## Installation
-After cloning the project repositories, you need to build and start the docker containers. For this, you need to follow the steps below:
+After cloning the project repositories in to the same folder, structure should look like image below, you need to build and start the docker containers. For this, you need to follow the steps below:
+<img src="./img_2.png">
 1. Go to the laradock folder and copy the env-example file to .env
 
 ```bash cp env-example .env```
